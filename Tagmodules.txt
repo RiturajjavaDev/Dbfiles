@@ -1,0 +1,115 @@
+Tag module
+-----------
+Using this module functionality user can purchase a new tag, user can see his/her tags, user can recharge tag, user can see tag transactions and user can apply for damaged tag.
+
+
+Purchase a tag
+---------------
+Screen-1 : Vehicle Search Functionality. In this when user click on 'Search' button with Vehicle Registration Number, then request will go to RTO app.
+	
+	- Valid Reg Num : 
+
+	- Invalid Reg Num :
+
+Invalid Reg Number:
+-------------------
+Display error msg in same form
+
+Valid Reg Num:
+---------------
+Display vehicle details in same form and display 'Proceed' button.
+
+When User click on 'Proceed' button execute below business conditions
+
+
+1) Check does that vehicle reg number already associated with a tag in ATS db TAG_MASTER table. 
+
+Tag is not associated for a given vehicle reg num
+--------------------------------------------------
+If vehicle reg number not associated with any tag then display purchae tag screen with 3 years as the tag duration.
+
+save vehicle_Dtls, vehicle_adrs_Dtls, vehicle_owner_Dtls, vehicle_Reg_Dtls in ATS db.
+
+Once tag purchase is successfull, insert data to TAG_MASTER table.
+
+Display option to recharge, update balacne in TAG_MASTER TABLE.
+
+Tag is associated for given vehicle reg num
+--------------------------------------------
+For Given Vehicle Reg Number if tag is already associated then check below conditions.
+
+If tag is already expired, allow him to purchase a new tag with below scenarios
+
+
+Please check old tag balance for given vehicle reg number.
+
+if balance is zero --- no need to do anything
+
+if balance is negative ---- charge (tag cost + balance)
+
+if balacne is positive ---- charge (tag cost - balance)
+
+If tag is not expired, say him already a have a tag please use existing tag. If existing tag is damaged please contact our customer service.
+
+
+TAG_MASTER
+-----------
+TAG_SEQ (PK)
+TAG_ID 
+VEHICLE_REG_NUM
+VEHICLE_TYPE
+TAG_START_DT
+TAG_EXPIRY_DT
+TAG_BAL
+USER_ID 
+
+
+Tag Transaction Module
+----------------------
+This is a Rest api. This rest api having business logic to deduct amount from tag when vehicle travelled from a toll plaza.
+
+Business Conditions
+-------------------
+1) If Tag is expired, negative balance will be added and msg/email will be sent immediatley to vhcl owner and record will be inserted to TAG_TX_DTL table with  below details.
+	
+	TX_STATS=FAILURE
+	FAILURE_RSN = Expired Tag
+
+2) If tag is not expired but balance is low, then negative balance will be added and msg/email will be sent immedialtley to vehicle owner and record will be inserted to TAG_TX_DTL table with below details
+
+	TX_STATUS=FAILURE
+	FAILURE_RSN= Low Balance
+	
+
+3) Tag is not expired, balance is also sufficient then deduct toll amount from tag balance and sent confirmation msg/email to vehicle owner and insert record into TAG_TX_DTL table with below details.
+
+	TX_STATUS = SUCCESS
+	FAILURE_RSN = 
+
+Request Binding
+----------------
+tagId
+vhclRegNum
+tollPlazaId
+tollAmt
+
+Response Binding
+----------------
+tagId
+txStatus
+failureReason
+vhclRegNum
+
+
+TAG_TX_DTL
+==========
+TX_ID  (PK)
+TAG_ID
+VHCL_REG_NUM
+TOLL_PLAZA_ID
+TOLL_AMT
+TX_STATUS
+TX_FAILURE_RSN
+CREATE_DT
+UPDATE_DT
+

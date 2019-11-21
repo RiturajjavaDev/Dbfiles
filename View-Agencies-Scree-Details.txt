@@ -1,0 +1,25 @@
+View Agencies
+-------------
+This screen is used to display all Agencies available in our application which are in 'Un-Lock' status and Role='AGENCY'.
+
+In this screen, Admin can 'Activate' or 'De-Activate' Agency account
+by using Action column icon(s).
+
+If Agency account is already Activated, then display hyperlink for De-Activation.
+
+If Agency account is already De-Activated, then display hyperlink for Activation.
+
+If 'Activate' hyperlink is clicked then Account should be Activated.
+
+If 'De-Activate' hyperlink is cliked then Account should be De-Activated'.
+
+When 'View Agencies' screen is loaded, Select dropdown will be empty and table will display all Agency accounts irrespective of Account_status.
+
+Status Dropdown will contain two options.
+		1) Active
+		2) In-Active
+
+If 'Active' option selected in Status dropdown then only Active Agency records should be displayed in Table.
+
+If 'In-Active' option option is selected then only 'De-Activated' Agency records should be displayed in Table.
+

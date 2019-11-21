@@ -1,0 +1,22 @@
+Purchase Tag Screen Details
+---------------------------
+When user login into ATS project, he will land on User dashboard.
+
+In ATS dashboard main menu, he can see 'Purchase Tag' option.
+
+When User click on 'Purchase Tag' menu  Vehicle Search Screen will be
+displayed with Vehicle Reg Number text filed and 'Search' button.
+
+Vehicle Reg Number is mandatory field.
+
+When 'Search' button is cliked, make a Rest Call to RTO application with vehicle Reg number.
+
+If Rest API provided vehicle Details, display vehicle details in the search form and display 'Proceed' button.
+
+If we don't get response from REST api display error msg in Search page as 'Invalid Reg Number'.
+
+
+
+
+
+
